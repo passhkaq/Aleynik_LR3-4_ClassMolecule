@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/pashkaa/projects/c++/Aleynik_LR3-4_ClassMolecule",
+      "program": "/Users/pashkaa/projects/c++/Aleynik_LR3-4_ClassMolecule/build/Debug/outDebug"
+    }
+  ]
+}
