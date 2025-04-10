@@ -4,19 +4,23 @@
 class Molecule {
     private:
         string moleculeName;
-        vector<map<string, int>> atomList;
+        vector<pair<string, double>> atomList;
     public:
         //constructors
         Molecule();
         Molecule(string molName);
-        Molecule(string molName, vector<map<string, int>> atoms);
+        Molecule(string molName, vector<pair<string, double>> atoms);
         Molecule(const Molecule& other);
         ~Molecule();
+
         //setters/getters
-        void setMolName(string molName);
-        void setAtoms(vector<map<string, int>> atomList);
-        const string& getMolName() const;
-        const vector<map<string, int>>& getAtoms() const;
+        void setMolName(string molName) { moleculeName = molName; };
+        void setAtoms(vector<pair<string, double>> atoms) {
+            this->atomList = atoms;
+        };
+        const string& getMolName() const { return moleculeName; };
+        const vector<pair<string, double>>& getAtoms() const { return atomList; };
+
         //overloaded operators
         const bool operator > (const Molecule& other) const;
         const bool operator < (const Molecule& other) const;
@@ -24,8 +28,12 @@ class Molecule {
         const Molecule& operator = (const Molecule& other);
         Molecule operator ++ ();
         Molecule operator -- ();
-        friend ostream& operator >> (ostream& mystream, Molecule &obj);
         friend ostream& operator << (ostream& mystream, const Molecule &obj);
+        friend istream& operator >> (istream& mystream, Molecule &obj);
+
+        //methods
+        int calculateMolecularFormula(const Molecule& obj) const;
+        void displayMolecularFormula();
 };
 
 #endif //_MOLECULE_H_
