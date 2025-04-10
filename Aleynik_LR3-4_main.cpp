@@ -9,7 +9,10 @@ struct menuItem {
 
 int main() {
     map <int, menuItem> menu = {
-
+        {1, {"Create molecule constructor", addMolecule}},
+        {2, {"Create random molecule constructor", addRandomMolecule}},
+        {3, {"Display all molecules", displayMolecule}},
+        {4, {""}}
     };
 
     int choice = 0;

@@ -1,19 +1,9 @@
-#include <string>
-#include <iostream>
-#include <vector>
-#include <map>
-#include <functional>
-#include <numeric>
-#include <fstream>
-#include <sstream>
 #include "Aleynik_LR3-4_ClassMolecule.h"
 #include "Aleynik_LR3-4_methods.h"
 
-using namespace std;
-
 
 //constructors
-Molecule::Molecule() : Molecule("Unknown", {}) {};
+Molecule::Molecule() : moleculeName("Unknown"), atomList({}) {}
 Molecule::Molecule(string molName) : Molecule(molName, {}) {};
 Molecule::Molecule(string molName, vector<pair<string, double>> atoms) : Molecule(molName) {
     setAtoms(atoms);

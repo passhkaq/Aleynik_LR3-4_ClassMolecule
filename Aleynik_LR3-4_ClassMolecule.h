@@ -1,6 +1,17 @@
 #ifndef _MOLECULE_H_
 #define _MOLECULE_H_
 
+#include <string>
+#include <iostream>
+#include <vector>
+#include <map>
+#include <functional>
+#include <numeric>
+#include <fstream>
+#include <sstream>
+
+using namespace std;
+
 class Molecule {
     private:
         string moleculeName;
@@ -34,6 +45,8 @@ class Molecule {
         //methods
         int calculateMolecularFormula(const Molecule& obj) const;
         void displayMolecularFormula();
+        void display() const;
+        static Molecule input();
 };
 
 #endif //_MOLECULE_H_
