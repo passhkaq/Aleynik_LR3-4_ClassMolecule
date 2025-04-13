@@ -1,19 +1,32 @@
 #include "Aleynik_LR3-4_ClassMolecule.h"
 #include "Aleynik_LR3-4_methods.h"
 
-
 //constructors
-Molecule::Molecule() : moleculeName("Unknown"), atomList({}) {}
-Molecule::Molecule(string molName) : Molecule(molName, {}) {};
-Molecule::Molecule(string molName, vector<pair<string, double>> atoms) : Molecule(molName) {
-    setAtoms(atoms);
+Molecule::Molecule() : moleculeName("Unknown"), atomList({}), moleculeMass(0) {}
+
+Molecule::Molecule(string molName) : moleculeName(molName), atomList({}), moleculeMass(0) {}
+
+Molecule::Molecule(string molName, vector<pair<string, double>> atoms, int molMass)
+    : moleculeName(molName), atomList(atoms) {
+    setMolMass(atoms);
 }
 Molecule::Molecule(const Molecule& other)
-    : moleculeName(other.moleculeName), atomList(other.atomList) {};
+    : moleculeName(other.moleculeName), atomList(other.atomList), moleculeMass(other.moleculeMass) {}
 
 //overloaded operators
-// const bool Molecule::operator > (const Molecule& other) const { return  }
-// const bool Molecule::operator < (const Molecule& other) const { return  }
+const bool Molecule::operator > (const Molecule& other) const { return other.moleculeMass > this->moleculeMass; }
+
+const bool Molecule::operator < (const Molecule& other) const { return other.moleculeMass < this->moleculeMass; }
+
+Molecule Molecule::operator ++ () {
+    ++moleculeMass;
+    return *this;
+}
+
+Molecule Molecule::operator -- () {
+    --moleculeMass;
+    return *this;
+}
 
 Molecule Molecule::operator + (const Molecule& other) const {
     Molecule result(moleculeName + "+" + other.moleculeName);
@@ -50,6 +63,7 @@ ostream& operator << (ostream& mystream, const Molecule &obj) {
     for (const auto& atom : obj.atomList) {
         mystream << "  " << atom.first << ": " << atom.second << endl;
     }
+    mystream << "Molecular mass: " << obj.moleculeMass << endl;
     return mystream;
 }
 
@@ -79,18 +93,6 @@ istream& operator >> (istream& mystream, Molecule &obj) {
 }
 
 //methods
-int Molecule::calculateMolecularFormula(const Molecule& obj) const {
-    int result = 0;
-    for (const auto& item : atomList) {
-        result += item.second;
-    }
-    result /= atomList.size();
-    return result;
-}
-
-void Molecule::displayMolecularFormula() {
-    cout << "The molecular formula is an average of all the atoms in a molecule." << endl;
-}
 
 
 

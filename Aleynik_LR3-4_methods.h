@@ -100,7 +100,7 @@ Molecule Molecule::input() {
         atoms.push_back({atomName, count});
     }
 
-    return Molecule(name, atoms);
+    return Molecule(name, atoms, 0);
 }
 
 void addMolecule() {
@@ -110,12 +110,17 @@ void addMolecule() {
 Molecule createRandomMolecule() {
     int randomIndex = rand() % randomMoleculeList.size();
     const auto& [name, atoms] = randomMoleculeList[randomIndex];
-    return Molecule(name, atoms);
+    return Molecule(name, atoms, 0);
 }
 
 void addRandomMolecule() {
     vectorMolecule.emplace_back(createRandomMolecule());
 }
+
+void displayMolecularFormula() {
+    cout << "The molecular formula is an average of all the atoms in a molecule." << endl;
+}
+
 
 
 #endif //_METHODS_H_

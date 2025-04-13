@@ -12,7 +12,7 @@ int main() {
         {1, {"Create molecule constructor", addMolecule}},
         {2, {"Create random molecule constructor", addRandomMolecule}},
         {3, {"Display all molecules", displayMolecule}},
-        {4, {""}}
+        {4, {"Display molecular formula", displayMolecularFormula}},
     };
 
     int choice = 0;
@@ -25,7 +25,16 @@ int main() {
         }
         cout << "0. Exit" << endl;
 
+        enterInteger(choice, "Enter your choice: ", 0, 4);
 
+        if (choice == 0) {
+            cout << "Poka Poka" << endl;
+            break;
+        } else {
+            menu[choice].action();
+        }
+
+        cout << endl << endl;
     }
 
 
