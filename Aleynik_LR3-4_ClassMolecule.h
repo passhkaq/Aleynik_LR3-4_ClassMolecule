@@ -49,12 +49,13 @@ class Molecule {
         const Molecule& operator = (const Molecule& other);
         Molecule operator ++ ();
         Molecule operator -- ();
+        Molecule operator ++ (int);
+        Molecule operator -- (int);
         friend ostream& operator << (ostream& mystream, const Molecule &obj);
         friend istream& operator >> (istream& mystream, Molecule &obj);
 
         //methods
-        void display() const;
-        static Molecule input();
+
 };
 
 #endif //_MOLECULE_H_

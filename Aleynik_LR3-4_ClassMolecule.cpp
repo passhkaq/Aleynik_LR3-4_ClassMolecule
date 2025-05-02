@@ -1,6 +1,8 @@
 #include "Aleynik_LR3-4_ClassMolecule.h"
 #include "Aleynik_LR3-4_methods.h"
 
+
+
 //constructors
 Molecule::Molecule() : moleculeName("Unknown"), atomList({}), moleculeMass(0) {}
 
@@ -12,7 +14,7 @@ Molecule::Molecule(string molName, vector<pair<string, double>> atoms, int molMa
 }
 Molecule::Molecule(const Molecule& other)
     : moleculeName(other.moleculeName), atomList(other.atomList), moleculeMass(other.moleculeMass) {}
-
+Molecule::~Molecule() {};
 //overloaded operators
 const bool Molecule::operator > (const Molecule& other) const { return other.moleculeMass > this->moleculeMass; }
 
@@ -26,6 +28,18 @@ Molecule Molecule::operator ++ () {
 Molecule Molecule::operator -- () {
     --moleculeMass;
     return *this;
+}
+
+Molecule Molecule::operator++(int) {
+    Molecule temp = *this;
+    ++(*this);
+    return temp;
+}
+
+Molecule Molecule::operator--(int) {
+    Molecule temp = *this;
+    --(*this);
+    return temp;
 }
 
 Molecule Molecule::operator + (const Molecule& other) const {
@@ -53,43 +67,41 @@ const Molecule& Molecule::operator = (const Molecule& other) {
     if (this != &other) {
         moleculeName = other.moleculeName;
         atomList = other.atomList;
+        moleculeMass = other.moleculeMass;
     }
     return *this;
 }
 
-ostream& operator << (ostream& mystream, const Molecule &obj) {
-    mystream << "Molecule: " << obj.moleculeName << endl;
-    mystream << "Atoms: " << endl;
+ostream& operator << (ostream& os, const Molecule &obj) {
+    os << "Molecule: " << obj.moleculeName << endl;
+    os << "Atoms: " << endl;
     for (const auto& atom : obj.atomList) {
-        mystream << "  " << atom.first << ": " << atom.second << endl;
+        os << "  " << atom.first << ": " << atom.second << endl;
     }
-    mystream << "Molecular mass: " << obj.moleculeMass << endl;
-    return mystream;
+    os << "Molecular mass: " << obj.moleculeMass << endl;
+    return os;
 }
 
-istream& operator >> (istream& mystream, Molecule &obj) {
+istream& operator >> (istream& is, Molecule &obj) {
     string name;
     int numAtoms;
-    cout << "Enter molecule name: ";
-    mystream >> name;
+    enterString(name, "Enter molecule name: ", is);
     obj.setMolName(name);
 
-    cout << "Enter number of atoms: ";
-    mystream >> numAtoms;
+    enterInteger(numAtoms, "Enter number of atoms: ", 0, 100, is);
 
     vector<pair<string, double>> atoms;
     for (int i = 0; i < numAtoms; ++i) {
         string atomName;
         int count;
-        cout << "Enter atom name " << i + 1 << ": ";
-        mystream >> atomName;
-        cout << "Enter count for " << atomName << ": ";
-        mystream >> count;
+        enterString(atomName, "Enter atom name " + to_string(i + 1) + ": ", is);
+        enterInteger(count, "Enter count for " + atomName + ": ", 0, 100, is);
         atoms.push_back({atomName, count});
     }
 
     obj.setAtoms(atoms);
-    return mystream;
+    obj.setMolMass(atoms);
+    return is;
 }
 
 //methods

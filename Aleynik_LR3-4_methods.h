@@ -41,70 +41,47 @@ bool userInput(string input, const int& min, const int& max) {
     return true;
 }
 
-void enterInteger(int& variable, const string& prompt, const int& min, const int& max) {
+void enterInteger(int& variable, const string& prompt, const int& min = 0, const int& max = 10000000, istream& is = cin) {
     string input;
     cout << prompt;
-    getline(cin, input);
+    getline(is, input);
 
     while(!(userInput(input, min, max))) {
         cout << prompt;
-        getline(cin, input);
+        getline(is, input);
     }
     variable = stoi(input);
 }
 
-void enterFloat(double& variable, const string& prompt, const int& min, const int& max) {
+void enterFloat(double& variable, const string& prompt, const int& min, const int& max, istream& is = cin) {
     string input;
     cout << prompt;
-    getline(cin, input);
+    getline(is, input);
 
     while(!(userInput(input, min, max))) {
         cout << prompt;
-        getline(cin, input);
+        getline(is, input);
     }
     variable = stof(input);
 }
 
-void enterString(string& variable, const string& prompt) {
+void enterString(string& variable, const string& prompt, istream& is = cin) {
     cout << prompt;
-    getline(cin, variable);
-}
-
-void Molecule::display() const {
-    cout << "Molecule name is " << moleculeName << endl;
-    cout << "It has " << atomList.size() << " atoms:" << endl;
-    for (const auto& item : atomList) {
-        cout << setw(5) << item.first << ": " << item.second << endl;
-    }
+    string input;
+    getline(is, input);
+    variable = input;
 }
 
 void displayMolecule() {
     for (const auto item : vectorMolecule) {
-        item.display();
+        cout << item;
     }
-}
-
-Molecule Molecule::input() {
-    string name;
-    enterString(name, "Enter molecule name: ");
-
-    int numAtoms;
-    enterInteger(numAtoms, "Enter number of atoms: ", 1, 100);
-
-    vector<pair<string, double>> atoms;
-    for (int i = 0; i < numAtoms; ++i) {
-        string atomName;
-        double count;
-        enterString(atomName, "Enter atom name: ");
-        enterFloat(count, "Enter atom count: ", 1, 100);
-        atoms.push_back({atomName, count});
-    }
-
-    return Molecule(name, atoms, 0);
 }
 
 void addMolecule() {
-    vectorMolecule.emplace_back(Molecule::input());
+    Molecule Molecule_1;
+    cin >> Molecule_1;
+    vectorMolecule.emplace_back(Molecule_1);
 }
 
 Molecule createRandomMolecule() {
@@ -121,6 +98,61 @@ void displayMolecularFormula() {
     cout << "The molecular formula is an average of all the atoms in a molecule." << endl;
 }
 
+void postInkr() {
+    for (auto& item : vectorMolecule) {
+        item++;
+    }
+}
 
+void prefInkr() {
+    for (auto& item : vectorMolecule) {
+        ++item;
+    }
+}
+
+void postDekr() {
+    for (auto& item : vectorMolecule) {
+        item--;
+    }
+}
+
+void prefDekr() {
+    for (auto& item : vectorMolecule) {
+        --item;
+    }
+}
+
+void plus() {
+    if (sizeof(vectorMolecule) < 1) {return;}
+    int choice = 0, choice2 = 0;
+    enterInteger(choice, "Enter num: ", 0, sizeof(vectorMolecule));
+    enterInteger(choice2, "Enter num 2: ", 0, sizeof(vectorMolecule));
+    Molecule result = vectorMolecule[choice] + vectorMolecule[choice2];
+    vectorMolecule.emplace_back(result);
+}
+
+void ravno() {
+    int choice = 0, choice2 = 0;
+    enterInteger(choice, "Enter num: ", 0, sizeof(vectorMolecule));
+    Molecule result;
+    result = vectorMolecule[choice];
+    vectorMolecule.emplace_back(result);
+}
+
+void bolshe() {
+    int choice = 0, choice2 = 0;
+    enterInteger(choice, "Enter num: ", 0, sizeof(vectorMolecule));
+    enterInteger(choice, "Enter num 2: ", 0, sizeof(vectorMolecule));
+    bool result = vectorMolecule[choice] > vectorMolecule[choice2];
+    cout << "Molecule: " << choice << " > Molecule: " << choice2 << " - " << result << endl;
+}
+
+void menshe() {
+    int choice = 0, choice2 = 0;
+    enterInteger(choice, "Enter num: ", 0, sizeof(vectorMolecule));
+    enterInteger(choice, "Enter num 2: ", 0, sizeof(vectorMolecule));
+    bool result = vectorMolecule[choice] < vectorMolecule[choice2];
+    cout << "Molecule: " << choice << " < Molecule: " << choice2 << " - " << result << endl;
+}
 
 #endif //_METHODS_H_
